@@ -1,0 +1,21 @@
+FROM centos:6
+ENV HOME /
+RUN yum update -y && \
+    yum install -y \
+        centos-release-scl-rh && \
+    yum install -y \
+        devtoolset-3-gcc-c++ \
+        make \
+        redhat-rpm-config \
+        rpm-build \
+        rpmdevtools \
+        scl-utils \
+        tar && \
+    yum clean all && \
+    rpmdev-setuptree
+RUN echo '%dist .el6.jp3cki' >> /.rpmmacros
+ADD ./rpmbuild/ /rpmbuild/
+RUN chown -R root:root /rpmbuild
+RUN scl enable devtoolset-3 -- rpmbuild -ba /rpmbuild/SPECS/brotli.spec
+RUN tar -czf /tmp/brotli.tar.gz -C /rpmbuild RPMS SRPMS
+CMD ["/bin/true"]

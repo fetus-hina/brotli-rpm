@@ -1,4 +1,6 @@
-*.build
-*.build.bak
-rpmbuild/SOURCES/*.tar.gz
-Dockerfile
+/*.build
+/*.build.bak
+/Dockerfile
+/rpmbuild/SOURCES/*.tar.gz
+/rpmbuild/SPECS/brotli-*.spec
+/tmp

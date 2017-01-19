@@ -1,4 +1,6 @@
 FROM centos:6
+ARG BROTLI_VERSION=FILLME
+ARG SPEC_FILE=FILLME
 ENV HOME /
 RUN yum update -y && \
     yum install -y \
@@ -16,6 +18,6 @@ RUN yum update -y && \
 RUN echo '%dist .el6.jp3cki' >> /.rpmmacros
 ADD ./rpmbuild/ /rpmbuild/
 RUN chown -R root:root /rpmbuild
-RUN scl enable devtoolset-3 -- rpmbuild -ba /rpmbuild/SPECS/brotli.spec
+RUN scl enable devtoolset-3 -- rpmbuild -ba /rpmbuild/SPECS/${SPEC_FILE}
 RUN tar -czf /tmp/brotli.tar.gz -C /rpmbuild RPMS SRPMS
 CMD ["/bin/true"]

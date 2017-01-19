@@ -1,4 +1,6 @@
 FROM centos:7
+ARG BROTLI_VERSION=FILLME
+ARG SPEC_FILE=FILLME
 ENV HOME /
 RUN yum update -y && \
     yum install -y \
@@ -13,6 +15,6 @@ RUN yum update -y && \
 RUN echo '%dist .el7.jp3cki' >> /.rpmmacros
 ADD ./rpmbuild/ /rpmbuild/
 RUN chown -R root:root /rpmbuild
-RUN rpmbuild -ba /rpmbuild/SPECS/brotli.spec
+RUN rpmbuild -ba /rpmbuild/SPECS/${SPEC_FILE}
 RUN tar -czf /tmp/brotli.tar.gz -C /rpmbuild RPMS SRPMS
 CMD ["/bin/true"]
